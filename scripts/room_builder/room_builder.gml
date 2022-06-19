@@ -4,27 +4,37 @@ global.LDTKstruct = -1;
 global.project_path = "";
 global.LDtk_path = "";
 global.pause = false;
+global.selected_levels = [];
 draw_set_font(Font1);
 
 ini_open("data.ini");
 
-if (ini_section_exists("Paths")) {
-	if (ini_key_exists("Paths","LDtk")) {
-		var LD_path = ini_read_string("Paths","LDtk","");
-		if (LD_path != "") global.LDtk_path = LD_path;
-	}
-	if (ini_key_exists("Paths","Project")) {
-		var path = ini_read_string("Paths","Project","");
-		if (path != "") Dir = path;
-	}
-}else {
-	ini_write_string("Paths","LDtk","");
-	ini_write_string("Paths","Project","");
-}
+var LD_path = ini_read_string("Paths","LDtk","");
+if (LD_path != "") global.LDtk_path = LD_path;
+
+var path = ini_read_string("Paths","Project","");
+if (path != "") Dir = path;
+
+var levels = ini_read_string("Paths","Levels","");
+if (levels != "") global.selected_levels = json_parse(levels);
+
 ini_close();
 
-function room_create() {
-	
+function LDtk_parse() {
+	var file = file_text_open_read(global.LDtk_path);
+			
+	var json_string = "";
+	while (!file_text_eof(file)) {
+		json_string += file_text_read_string(file);
+		file_text_readln(file);
+	}
+	file_text_close(file);
+		
+	LDtk_struct = json_parse(json_string);
+}
+
+function room_create(all_levels = false) {
+	/*
 	output_string = "";
 	if (LDtk_struct == -1 or !file_exists(global.LDtk_path)) {
 		output_string += "LDtk file not selected or found.\n";
@@ -33,7 +43,9 @@ function room_create() {
 	if (Dir == "" or !directory_exists(Dir)) {
 		output_string += "Project file not selected or found.\n";
 		exit;
-	}
+	}*/
+	
+	LDtk_parse();
 	
 	tileset_names = {};
 	var tilesets = LDtk_struct.defs.tilesets;
@@ -42,24 +54,27 @@ function room_create() {
 	}
 	
 	var levels = LDtk_struct.levels;
-	var level_number = array_length(levels);
+	if (all_levels) {
+		var level_number = array_length(levels);
+	}else {
+		var level_number = array_length(global.selected_levels);
+	}
+	
 	var inst_number = 0;
+	var output_string = "";
 	
 	for (var n = 0; n < level_number; n++) {
-		var level = levels[n];
+		if (all_levels)	var level = levels[n];
+		else			var level = levels[global.selected_levels[n]];
 		var level_name = level.identifier;
 		var level_path = Dir+"/rooms/"+level_name+"/"+level_name+".yy";
+		
+		//If file doesn't already exist with the same name, it moves to the next level
 		if (!file_exists(level_path)) {
 			output_string += "Couldn't find room asset with name "+level_name+".\n";
 			continue;
 		}
 		var _depth = 0; //depth is increased by 100 everytime a layer is inserted in the string
-		
-		//If file doesn't already exist with the same name, it moves to the next level
-		if (!file_exists(level_path)) {
-			output_string += "Couldn't find room with name "+level_name+".\n";
-			continue;
-		}
 		
 		var level_file = file_text_open_read(level_path);
 		var level_json = "";
@@ -187,7 +202,8 @@ function room_create() {
 		file_text_close(room_file);
 	}
 	
-	output_string += "\nFinished!";
+	output_string += "Finished.";
+	oMenu._string = output_string;
 }
 
 function room_string_build_first() {
