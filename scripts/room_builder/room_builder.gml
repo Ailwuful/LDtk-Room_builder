@@ -21,16 +21,21 @@ if (levels != "") global.selected_levels = json_parse(levels);
 ini_close();
 
 function LDtk_parse() {
-	var file = file_text_open_read(global.LDtk_path);
+	//var file = file_text_open_read(global.LDtk_path);
 			
-	var json_string = "";
-	while (!file_text_eof(file)) {
-		json_string += file_text_read_string(file);
-		file_text_readln(file);
-	}
-	file_text_close(file);
+	//var json_string = "";
+	//while (!file_text_eof(file)) {
+	//	json_string += file_text_read_string(file);
+	//	file_text_readln(file);
+	//}
+	//file_text_close(file);
 		
-	LDtk_struct = json_parse(json_string);
+	//LDtk_struct = json_parse(json_string);
+	
+	var buffer = buffer_load(global.LDtk_path);
+	var json = buffer_read(buffer, buffer_string);
+	LDtk_struct = json_parse(json);
+	buffer_delete(buffer);
 }
 
 function room_create(all_levels = false) {

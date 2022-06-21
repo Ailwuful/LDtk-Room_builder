@@ -90,7 +90,8 @@ button = new EmuButtonImage(1088,32,48,48,spr_emu_help,0,c_white,1,true,function
 "Level names must match the names of rooms.\n"+
 "Also, LDtk levels sizes must be perfectly divisable by the grid size.\n\n"+
 "Click \"Load Level List\" to open a list of levels and select which GameMaker rooms to build.\n\n"+
-"Click \"Build Rooms\" to build all selected Levels or all Levels by default.";
+"Click \"Build Rooms\" to build all selected Levels or all Levels by default."+
+"Selecting Minify JSON in LDtk will greatly increase build speed.";
 });
 container.AddContent(button);
 
@@ -100,7 +101,8 @@ _string = "The LDtk to GameMaker room builder requires that "+
 "Level names must match the names of rooms.\n"+
 "Also, LDtk levels sizes must be perfectly divisable by the grid size.\n\n"+
 "Click \"Load Level List\" to open a list of levels and select which GameMaker rooms to build.\n\n"+
-"Click \"Build Rooms\" to build all selected Levels or all Levels by default.";
+"Click \"Build Rooms\" to build all selected Levels or all Levels by default.\n\n"+
+"Selecting Minify JSON in LDtk will greatly increase build speed.";
 
 /*
 if (file_exists(global.LDtk_path)) {
