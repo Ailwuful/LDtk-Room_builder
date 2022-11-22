@@ -21,6 +21,16 @@ if (levels != "") global.selected_levels = json_parse(levels);
 ini_close();
 
 function LDtk_parse() {
+	//var file = file_text_open_read(global.LDtk_path);
+			
+	//var json_string = "";
+	//while (!file_text_eof(file)) {
+	//	json_string += file_text_read_string(file);
+	//	file_text_readln(file);
+	//}
+	//file_text_close(file);
+		
+	//LDtk_struct = json_parse(json_string);
 	
 	var buffer = buffer_load(global.LDtk_path);
 	var json = buffer_read(buffer, buffer_string);
@@ -29,6 +39,16 @@ function LDtk_parse() {
 }
 
 function room_create(all_levels = false) {
+	/*
+	output_string = "";
+	if (LDtk_struct == -1 or !file_exists(global.LDtk_path)) {
+		output_string += "LDtk file not selected or found.\n";
+		exit;
+	}
+	if (Dir == "" or !directory_exists(Dir)) {
+		output_string += "Project file not selected or found.\n";
+		exit;
+	}*/
 	
 	LDtk_parse();
 	
@@ -45,6 +65,7 @@ function room_create(all_levels = false) {
 		var level_number = array_length(global.selected_levels);
 	}
 	
+	var inst_number = 0;
 	var output_string = "";
 	
 	for (var n = 0; n < level_number; n++) {
@@ -59,8 +80,6 @@ function room_create(all_levels = false) {
 			continue;
 		}
 		var _depth = 0; //depth is increased by 100 everytime a layer is inserted in the string
-		
-		var inst_number = 0;
 		
 		var level_file = file_text_open_read(level_path);
 		var level_json = "";
@@ -104,8 +123,8 @@ function room_create(all_levels = false) {
 					while (o < e_number) {
 						var obj_name = e[o].__identifier;
 						if (!file_exists(Dir+"/objects/"+obj_name+"/"+obj_name+".yy")) {o++; output_string += "Object of name "+obj_name+" not found.\n"; continue;}
-						rm.room_string += "{\"properties\":[],\"isDnd\":false,\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"inheritCode\":false,\"hasCreationCode\":false,\"colour\":4294967295,\"rotation\":0.0,\"scaleX\":1.0,\"scaleY\":1.0,\"imageIndex\":0,\"imageSpeed\":1.0,\"inheritedItemId\":null,\"frozen\":false,\"ignore\":false,\"inheritItemSettings\":false,\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",\"resourceVersion\":\"1.0\",\"name\":\""+"inst_"+obj_name+"_"+string(++inst_number)+"_"+level_name+"\",\"tags\":[],\"resourceType\":\"GMRInstance\",},\n"
-						rm.instanceCreationOrder += "{\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"path\":\""+rm.path+"\",},\n";
+						rm.room_string += "{\"properties\":[],\"isDnd\":false,\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"inheritCode\":false,\"hasCreationCode\":false,\"colour\":4294967295,\"rotation\":0.0,\"scaleX\":1.0,\"scaleY\":1.0,\"imageIndex\":0,\"imageSpeed\":1.0,\"inheritedItemId\":null,\"frozen\":false,\"ignore\":false,\"inheritItemSettings\":false,\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",\"resourceVersion\":\"1.0\",\"name\":\""+"inst_"+obj_name+"_"+string(++inst_number)+"\",\"tags\":[],\"resourceType\":\"GMRInstance\",},\n"
+						rm.instanceCreationOrder += "{\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"\",\"path\":\""+rm.path+"\",},\n";
 						o++;
 					}
 					
