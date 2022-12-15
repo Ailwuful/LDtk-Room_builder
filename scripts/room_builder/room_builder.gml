@@ -81,14 +81,19 @@ function room_create(all_levels = false) {
 		}
 		var _depth = 0; //depth is increased by 100 everytime a layer is inserted in the string
 		
-		var level_file = file_text_open_read(level_path);
-		var level_json = "";
-		while (!file_text_eof(level_file)) {
-			level_json += file_text_read_string(level_file);
-			file_text_readln(level_file);
-		}
+		var buffer = buffer_load(level_path);
+		var level_json = buffer_read(buffer, buffer_string);
 		level_json = json_parse(level_json);
-		file_text_close(level_file);
+		buffer_delete(buffer);
+		
+		//var level_file = file_text_open_read(level_path);
+		//var level_json = "";
+		//while (!file_text_eof(level_file)) {
+		//	level_json += file_text_read_string(level_file);
+		//	file_text_readln(level_file);
+		//}
+		//level_json = json_parse(level_json);
+		//file_text_close(level_file);
 		
 		rm = {
 			name : level_name,
@@ -194,6 +199,14 @@ function room_create(all_levels = false) {
 									"\n,},\"visible\":true,\"depth\":"+string(_depth)+",\"userdefinedDepth\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"layers\":[],\"hierarchyFrozen\":false,\"effectEnabled\":true,\"effectType\":null,\"properties\":[],\"resourceVersion\":\"1.0\",\"name\":\""+layer_name+"_"+string(s)+"\",\"tags\":[],\"resourceType\":\"GMRTileLayer\",},";
 						s--;
 						_depth += 100;
+					}
+					
+					// Creating a Tile layer for reference on types of tiles
+					if (l.__type == "IntGrid") {
+						var g = l.intGridCsv;
+						rm.room_string += "\n{\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"x\":0,\"y\":0,\"tiles\":{\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"TileSerialiseData\":\n"+
+											string(g) +
+											"\n,},\"visible\":false,\"depth\":0,\"userdefinedDepth\":true,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"layers\":[],\"hierarchyFrozen\":false,\"effectEnabled\":true,\"effectType\":null,\"properties\":[],\"resourceVersion\":\"1.0\",\"name\":\""+layer_name+"\",\"tags\":[],\"resourceType\":\"GMRTileLayer\",},";
 					}
 				}
 			}
