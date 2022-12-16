@@ -1,5 +1,7 @@
+// feather ignore all
 #macro LDtk_struct global.LDTKstruct
 #macro Dir global.project_path
+global.build_IntGrid = 1;
 global.LDTKstruct = -1;
 global.project_path = "";
 global.LDtk_path = "";
@@ -17,6 +19,8 @@ if (path != "") Dir = path;
 
 var levels = ini_read_string("Paths","Levels","");
 if (levels != "") global.selected_levels = json_parse(levels);
+
+global.build_IntGrid = ini_read_real("Paths","IntGrid",1);
 
 ini_close();
 
@@ -148,6 +152,7 @@ function room_create(all_levels = false) {
 					var tileset_name = tileset_names[$ l.__tilesetDefUid];
 					var tiles_struct = {};
 					var layer_name = l.__identifier;
+					var vis = l.visible;
 					tiles_struct[$ layer_name+"_1"] = array_create((rm.width/gridSize)*(rm.height/gridSize));
 					
 					var tile_index = 0;
@@ -196,13 +201,13 @@ function room_create(all_levels = false) {
 						tiles_struct[$ layer_name+"_"+string(s)] = json_stringify(tiles_struct[$ layer_name+"_"+string(s)]);
 						rm.room_string += "\n{\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"x\":0,\"y\":0,\"tiles\":{\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"TileSerialiseData\":\n"+
 									tiles_struct[$ layer_name+"_"+string(s)] +
-									"\n,},\"visible\":true,\"depth\":"+string(_depth)+",\"userdefinedDepth\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"layers\":[],\"hierarchyFrozen\":false,\"effectEnabled\":true,\"effectType\":null,\"properties\":[],\"resourceVersion\":\"1.0\",\"name\":\""+layer_name+"_"+string(s)+"\",\"tags\":[],\"resourceType\":\"GMRTileLayer\",},";
+									"\n,},\"visible\":"+string(vis)+",\"depth\":"+string(_depth)+",\"userdefinedDepth\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"layers\":[],\"hierarchyFrozen\":false,\"effectEnabled\":true,\"effectType\":null,\"properties\":[],\"resourceVersion\":\"1.0\",\"name\":\""+layer_name+"_"+string(s)+"\",\"tags\":[],\"resourceType\":\"GMRTileLayer\",},";
 						s--;
 						_depth += 100;
 					}
 					
 					// Creating a Tile layer for reference on types of tiles
-					if (l.__type == "IntGrid") {
+					if (global.build_IntGrid and l.__type == "IntGrid") {
 						var g = l.intGridCsv;
 						rm.room_string += "\n{\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"x\":0,\"y\":0,\"tiles\":{\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"TileSerialiseData\":\n"+
 											string(g) +

@@ -35,17 +35,21 @@ container.AddContent(reload_button);
 
 var button = new EmuButton(20,460,130,100,"Build Rooms", function() {
 	if (!file_exists(global.LDtk_path)) {
+		oMenu._string = "LDtk file not selected or doesn't exist";
 		return;
 	}
 	if (!directory_exists(Dir)) {
+		oMenu._string = "GameMaker project not selected or doesn't exist";
 		return;
 	}
+	oMenu._string = "Building...";
 	
 	global.selected_levels = self.GetSibling("RoomList").GetAllSelectedIndices();
 	if (array_length(global.selected_levels) > 0) {
 		ini_open("data.ini");
 		var selected_levels_string = json_stringify(global.selected_levels);
 		ini_write_string("Paths","Levels",selected_levels_string);
+		ini_write_real("Paths","IntGrid",global.build_IntGrid);
 		ini_close();
 		room_create(false);
 	}else {
@@ -103,6 +107,11 @@ _string = "The LDtk to GameMaker room builder requires that "+
 "Click \"Load Level List\" to open a list of levels and select which GameMaker rooms to build.\n\n"+
 "Click \"Build Rooms\" to build all selected Levels or all Levels by default.\n\n"+
 "Selecting Minify JSON in LDtk will greatly increase build speed.";
+
+button = new EmuCheckbox(10, 640, 120, 60, "Build\nIntGrid layer",global.build_IntGrid,function() {
+	global.build_IntGrid = !global.build_IntGrid;
+});
+container.AddContent(button);
 
 /*
 if (file_exists(global.LDtk_path)) {
