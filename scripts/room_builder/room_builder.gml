@@ -142,7 +142,7 @@ function room_create(all_levels = false) {
 							obj_image_speed = "1.0",
 							obj_image_index = "0",
 							obj_image_angle = "0.0",
-							obj_properties = "[]";
+							obj_properties = "[";
 						
 						if (array_length(e[o].fieldInstances) > 0) { //Add fields to instance parameters if any
 							var fields = e[o].fieldInstances;
@@ -154,17 +154,16 @@ function room_create(all_levels = false) {
 									if (fields[_n].__identifier == "image_angle") obj_image_angle = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_index") obj_image_index = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_speed") obj_image_speed = string(fields[_n].__value);
-									//else {
-									//	var _field_name = string(fields[_n].__identifier),
-									//		_field_value = string(fields[_n].__value);
-									//	obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":"+obj_name+",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
-									//	//obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\"variable_name\",\"path\":\"objects/oPrize/oPrize.yy\",},\"objectId\":{\"name\":\"oPrize\",\"path\":\"objects/oPrize/oPrize.yy\",},\"value\":"0.6",},"
-									//}
+									else {
+										var _field_name = string(fields[_n].__identifier),
+											_field_value = string(fields[_n].__value);
+										obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
+									}
 								}
 								_n++;
 							}
 						}
-						//obj_properties += "]";
+						obj_properties += "]";
 						//show_debug_message([obj_image_angle,obj_image_index,obj_image_speed,obj_scaleX,obj_scaleY,obj_color]);
 						rm.room_string += "{\"resourceType\":\"GMRInstance\",\"resourceVersion\":\"1.0\",\"name\":\""+"inst_"+obj_name+"_"+string(++inst_number)+"\",\"properties\":"+obj_properties+",\"isDnd\":false,\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"inheritCode\":false,\"hasCreationCode\":false,\"colour\":"+obj_color+",\"rotation\":"+obj_image_angle+",\"scaleX\":"+obj_scaleX+",\"scaleY\":"+obj_scaleY+",\"imageIndex\":"+obj_image_index+",\"imageSpeed\":"+obj_image_speed+",\"inheritedItemId\":null,\"frozen\":false,\"ignore\":false,\"inheritItemSettings\":false,\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",},\n";
 						rm.instanceCreationOrder += "{\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"\",\"path\":\""+rm.path+"\",},\n";
