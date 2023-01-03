@@ -132,8 +132,43 @@ function room_create(all_levels = false) {
 					while (o < e_number) {
 						var obj_name = e[o].__identifier;
 						if (!file_exists(Dir+"/objects/"+obj_name+"/"+obj_name+".yy")) {o++; output_string += "Object of name "+obj_name+" not found.\n"; continue;}
-						rm.room_string += "{\"properties\":[],\"isDnd\":false,\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"inheritCode\":false,\"hasCreationCode\":false,\"colour\":4294967295,\"rotation\":0.0,\"scaleX\":1.0,\"scaleY\":1.0,\"imageIndex\":0,\"imageSpeed\":1.0,\"inheritedItemId\":null,\"frozen\":false,\"ignore\":false,\"inheritItemSettings\":false,\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",\"resourceVersion\":\"1.0\",\"name\":\""+"inst_"+obj_name+"_"+string(++inst_number)+"\",\"tags\":[],\"resourceType\":\"GMRInstance\",},\n"
+						
+						var entity_index = array_find_index(LDtk_struct.defs.entities,method({obj : obj_name}, function(_val, _ind) {
+							return _val.identifier == obj;
+						}));
+						var obj_color = "4294967295",
+							obj_scaleX = string(e[o].width / LDtk_struct.defs.entities[entity_index].width),
+							obj_scaleY = string(e[o].height / LDtk_struct.defs.entities[entity_index].height),
+							obj_image_speed = "1.0",
+							obj_image_index = "0",
+							obj_image_angle = "0.0",
+							obj_properties = "[]";
+						
+						if (array_length(e[o].fieldInstances) > 0) { //Add fields to instance parameters if any
+							var fields = e[o].fieldInstances;
+							var f_number = array_length(fields);
+							var _n = 0;
+							repeat(f_number) {
+								if (fields[_n].__type == "Color") obj_color = string(color_to_decimal(fields[_n].__value));
+								else if (fields[_n].__type == "Float" or fields[_n].__type == "Integer") {
+									if (fields[_n].__identifier == "image_angle") obj_image_angle = string(fields[_n].__value);
+									else if (fields[_n].__identifier == "image_index") obj_image_index = string(fields[_n].__value);
+									else if (fields[_n].__identifier == "image_speed") obj_image_speed = string(fields[_n].__value);
+									//else {
+									//	var _field_name = string(fields[_n].__identifier),
+									//		_field_value = string(fields[_n].__value);
+									//	obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":"+obj_name+",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
+									//	//obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\"variable_name\",\"path\":\"objects/oPrize/oPrize.yy\",},\"objectId\":{\"name\":\"oPrize\",\"path\":\"objects/oPrize/oPrize.yy\",},\"value\":"0.6",},"
+									//}
+								}
+								_n++;
+							}
+						}
+						//obj_properties += "]";
+						//show_debug_message([obj_image_angle,obj_image_index,obj_image_speed,obj_scaleX,obj_scaleY,obj_color]);
+						rm.room_string += "{\"resourceType\":\"GMRInstance\",\"resourceVersion\":\"1.0\",\"name\":\""+"inst_"+obj_name+"_"+string(++inst_number)+"\",\"properties\":"+obj_properties+",\"isDnd\":false,\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"inheritCode\":false,\"hasCreationCode\":false,\"colour\":"+obj_color+",\"rotation\":"+obj_image_angle+",\"scaleX\":"+obj_scaleX+",\"scaleY\":"+obj_scaleY+",\"imageIndex\":"+obj_image_index+",\"imageSpeed\":"+obj_image_speed+",\"inheritedItemId\":null,\"frozen\":false,\"ignore\":false,\"inheritItemSettings\":false,\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",},\n";
 						rm.instanceCreationOrder += "{\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"\",\"path\":\""+rm.path+"\",},\n";
+						
 						o++;
 					}
 					
