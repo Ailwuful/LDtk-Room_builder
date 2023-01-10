@@ -150,7 +150,7 @@ function room_create(all_levels = false) {
 							var _n = 0;
 							repeat(f_number) {
 								if (fields[_n].__type == "Color") obj_color = string(color_to_decimal(fields[_n].__value));
-								else if (fields[_n].__type == "Float" or fields[_n].__type == "Integer") {
+								else if (fields[_n].__type == "Float" or fields[_n].__type == "Int") {
 									if (fields[_n].__identifier == "image_angle") obj_image_angle = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_index") obj_image_index = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_speed") obj_image_speed = string(fields[_n].__value);
@@ -159,6 +159,11 @@ function room_create(all_levels = false) {
 											_field_value = string(fields[_n].__value);
 										obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
 									}
+								}
+								else if (fields[_n].__type == "Point") {
+									var _field_name = string(fields[_n].__identifier);
+									var _field_value = string(fields[_n].__value.cx + (fields[_n].__value.cy /100));
+									obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
 								}
 								_n++;
 							}
