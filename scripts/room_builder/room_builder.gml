@@ -53,6 +53,7 @@ function room_create(all_levels = false) {
 		output_string += "Project file not selected or found.\n";
 		exit;
 	}*/
+	var _timer = get_timer();
 	
 	LDtk_parse();
 	
@@ -89,15 +90,6 @@ function room_create(all_levels = false) {
 		var level_json = buffer_read(buffer, buffer_string);
 		level_json = json_parse(level_json);
 		buffer_delete(buffer);
-		
-		//var level_file = file_text_open_read(level_path);
-		//var level_json = "";
-		//while (!file_text_eof(level_file)) {
-		//	level_json += file_text_read_string(level_file);
-		//	file_text_readln(level_file);
-		//}
-		//level_json = json_parse(level_json);
-		//file_text_close(level_file);
 		
 		rm = {
 			name : level_name,
@@ -162,7 +154,12 @@ function room_create(all_levels = false) {
 								}
 								else if (fields[_n].__type == "Point") {
 									var _field_name = string(fields[_n].__identifier);
-									var _field_value = string(fields[_n].__value.cx + (fields[_n].__value.cy /100));
+									var _field_value = fields[_n].__value != pointer_null ? string(fields[_n].__value.cx + (fields[_n].__value.cy /100)) : "-1";
+									obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
+								}
+								else if (fields[_n].__type == "Array<Int>" or fields[_n].__type == "Array<Float>") {
+									var _field_name = string(fields[_n].__identifier),
+										_field_value = string(fields[_n].__value);
 									obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
 								}
 								_n++;
@@ -170,8 +167,8 @@ function room_create(all_levels = false) {
 						}
 						obj_properties += "]";
 						//show_debug_message([obj_image_angle,obj_image_index,obj_image_speed,obj_scaleX,obj_scaleY,obj_color]);
-						rm.room_string += "{\"resourceType\":\"GMRInstance\",\"resourceVersion\":\"1.0\",\"name\":\""+"inst_"+obj_name+"_"+string(++inst_number)+"\",\"properties\":"+obj_properties+",\"isDnd\":false,\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"inheritCode\":false,\"hasCreationCode\":false,\"colour\":"+obj_color+",\"rotation\":"+obj_image_angle+",\"scaleX\":"+obj_scaleX+",\"scaleY\":"+obj_scaleY+",\"imageIndex\":"+obj_image_index+",\"imageSpeed\":"+obj_image_speed+",\"inheritedItemId\":null,\"frozen\":false,\"ignore\":false,\"inheritItemSettings\":false,\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",},\n";
-						rm.instanceCreationOrder += "{\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"\",\"path\":\""+rm.path+"\",},\n";
+						rm.room_string += "{\"resourceType\":\"GMRInstance\",\"resourceVersion\":\"1.0\",\"name\":\""+"inst_"+obj_name+"_"+string(++inst_number)+"_"+level_name+"\",\"properties\":"+obj_properties+",\"isDnd\":false,\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"inheritCode\":false,\"hasCreationCode\":false,\"colour\":"+obj_color+",\"rotation\":"+obj_image_angle+",\"scaleX\":"+obj_scaleX+",\"scaleY\":"+obj_scaleY+",\"imageIndex\":"+obj_image_index+",\"imageSpeed\":"+obj_image_speed+",\"inheritedItemId\":null,\"frozen\":false,\"ignore\":false,\"inheritItemSettings\":false,\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",},\n";
+						rm.instanceCreationOrder += "{\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"path\":\""+rm.path+"\",},\n";
 						
 						o++;
 					}
@@ -263,8 +260,8 @@ function room_create(all_levels = false) {
 		file_text_write_string(room_file,rm.room_string);
 		file_text_close(room_file);
 	}
-	
-	output_string += "Finished.";
+	_timer = string(get_timer() - _timer);
+	output_string += "Finished in "+ _timer + "ms.";
 	oMenu._string = output_string;
 }
 
