@@ -1,9 +1,11 @@
 {
-  "resourceType": "GMNotes",
-  "resourceVersion": "1.1",
-  "name": "Changes",
-  "parent": {
-    "name": "LDtk-room_builder",
-    "path": "LDtk-room_builder.yyp",
+  "$GMNotes":"",
+  "%Name":"Changes",
+  "name":"Changes",
+  "parent":{
+    "name":"LDtk-room_builder",
+    "path":"LDtk-room_builder.yyp",
   },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
 }

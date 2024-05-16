@@ -96,7 +96,7 @@ function room_create(all_levels = false) {
 			width : level.pxWid, //div LDtk_struct.defaultGridSize * LDtk_struct.defaultGridSize,
 			height : level.pxHei, //div LDtk_struct.defaultGridSize * LDtk_struct.defaultGridSize,
 			bg_color : color_to_decimal(level.__bgColor),
-			room_string : room_string_build_first(),
+			room_string : "",
 			parent : {
 				name : level_json.parent.name,
 				path : level_json.parent.path,
@@ -119,7 +119,7 @@ function room_create(all_levels = false) {
 				if (e_number > 0) {
 					
 					var gridSize = string(l.__gridSize);
-					rm.room_string += "{\"instances\":[\n";
+					rm.room_string += "\n{\"$GMRInstanceLayer\":\"\",\"%Name\":\""+l.__identifier+"\",\"depth\":"+string(_depth)+",\"effectEnabled\":true,\"effectType\":null,\"gridX\":"+gridSize+",\"gridY\":"+gridSize+",\"hierarchyFrozen\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"inheritSubLayers\":true,\"inheritVisibility\":true,\"instances\":[\n";
 					
 					while (o < e_number) {
 						var obj_name = e[o].__identifier;
@@ -149,31 +149,31 @@ function room_create(all_levels = false) {
 									else {
 										var _field_name = string(fields[_n].__identifier),
 											_field_value = string(fields[_n].__value);
-										obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
+										obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
 									}
 								}
 								else if (fields[_n].__type == "Point") {
 									var _field_name = string(fields[_n].__identifier);
 									var _field_value = fields[_n].__value != pointer_null ? string(fields[_n].__value.cx + (fields[_n].__value.cy /100)) : "-1";
-									obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
+									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
 								}
 								else if (fields[_n].__type == "Array<Int>" or fields[_n].__type == "Array<Float>") {
 									var _field_name = string(fields[_n].__identifier),
 										_field_value = string(fields[_n].__value);
-									obj_properties += "\n{\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"1.0\",\"name\":\"\",\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"value\":\""+_field_value+"\",},\n";
+									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
 								}
 								_n++;
 							}
 						}
 						obj_properties += "]";
 						//show_debug_message([obj_image_angle,obj_image_index,obj_image_speed,obj_scaleX,obj_scaleY,obj_color]);
-						rm.room_string += "{\"resourceType\":\"GMRInstance\",\"resourceVersion\":\"1.0\",\"name\":\""+"inst_"+obj_name+"_"+string(++inst_number)+"_"+level_name+"\",\"properties\":"+obj_properties+",\"isDnd\":false,\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"inheritCode\":false,\"hasCreationCode\":false,\"colour\":"+obj_color+",\"rotation\":"+obj_image_angle+",\"scaleX\":"+obj_scaleX+",\"scaleY\":"+obj_scaleY+",\"imageIndex\":"+obj_image_index+",\"imageSpeed\":"+obj_image_speed+",\"inheritedItemId\":null,\"frozen\":false,\"ignore\":false,\"inheritItemSettings\":false,\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",},\n";
+						rm.room_string += "{\"$GMRInstance\":\"\",\"%Name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"colour\":"+obj_color+",\"frozen\":false,\"hasCreationCode\":false,\"ignore\":false,\"imageIndex\":"+obj_image_index+",\"imageSpeed\":"+obj_image_speed+",\"inheritCode\":false,\"inheritedItemId\":null,\"inheritItemSettings\":false,\"isDnd\":false,\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"properties\":"+obj_properties+",\"resourceType\":\"GMRInstance\",\"resourceVersion\":\"2.0\",\"rotation\":"+obj_image_angle+",\"scaleX\":"+obj_scaleX+",\"scaleY\":"+obj_scaleY+",\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",},\n";
 						rm.instanceCreationOrder += "{\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"path\":\""+rm.path+"\",},\n";
-						
+						inst_number++;
 						o++;
 					}
-					
-					rm.room_string += "],\"visible\":true,\"depth\":"+string(_depth)+",\"userdefinedDepth\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"gridX\":"+gridSize+",\"gridY\":"+gridSize+",\"layers\":[],\"hierarchyFrozen\":false,\"effectEnabled\":true,\"effectType\":null,\"properties\":[],\"resourceVersion\":\"1.0\",\"name\":\""+l.__identifier+"\",\"tags\":[],\"resourceType\":\"GMRInstanceLayer\",},\n";
+					var vis = l.visible ? "true" : "false";
+					rm.room_string += "],\"layers\":[],\"name\":\""+l.__identifier+"\",\"properties\":[],\"resourceType\":\"GMRInstanceLayer\",\"resourceVersion\":\"2.0\",\"userdefinedDepth\":false,\"visible\":"+vis+",},\n";
 					_depth += 100;
 				}
 			}			
@@ -188,17 +188,19 @@ function room_create(all_levels = false) {
 					var tileset_name = tileset_names[$ l.__tilesetDefUid];
 					var tiles_struct = {};
 					var layer_name = l.__identifier;
-					var vis = l.visible;
-					tiles_struct[$ layer_name+"_1"] = array_create((rm.width/gridSize)*(rm.height/gridSize));
-					
+					var vis = l.visible ? "true" : "false";
+					var tiles_array_size = int64((rm.width/gridSize)*(rm.height/gridSize));
+					tiles_struct[$ layer_name+"_1"] = array_create(tiles_array_size + 1, int64(0));
+					tiles_struct[$ layer_name+"_1"][0] = tiles_array_size;
 					var tile_index = 0;
 					while (o < tiles_number) {
-						tile_index = (tiles[o].px[0]/gridSize) + (tiles[o].px[1]/gridSize * l.__cWid);
+						tile_index = (tiles[o].px[0]/gridSize) + (tiles[o].px[1]/gridSize * l.__cWid) + 1;
 						var layer_n = 1;
 						while (tiles_struct[$ layer_name+"_"+string(layer_n)][tile_index] != 0) {
 							layer_n++;
 							if (!variable_struct_exists(tiles_struct,layer_name+"_"+string(layer_n))) {
-								tiles_struct[$ layer_name+"_"+string(layer_n)] = array_create((rm.width/gridSize)*(rm.height/gridSize));
+								tiles_struct[$ layer_name+"_"+string(layer_n)] = array_create(tiles_array_size + 1, int64(0));
+								tiles_struct[$ layer_name+"_"+string(layer_n)][0] = tiles_array_size;
 							}
 						}
 						tiles_struct[$ layer_name+"_"+string(layer_n)][tile_index] = int64(tiles[o].t);
@@ -235,9 +237,9 @@ function room_create(all_levels = false) {
 					var s = tiles_struct_number;
 					repeat (tiles_struct_number) {
 						tiles_struct[$ layer_name+"_"+string(s)] = json_stringify(tiles_struct[$ layer_name+"_"+string(s)]);
-						rm.room_string += "\n{\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"x\":0,\"y\":0,\"tiles\":{\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"TileSerialiseData\":\n"+
+						rm.room_string += "\n{\"$GMRTileLayer\":\"\",\"%Name\":\""+layer_name+"_"+string(s)+"\",\"depth\":"+string(_depth)+",\"effectEnabled\":true,\"effectType\":null,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"hierarchyFrozen\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"inheritSubLayers\":true,\"inheritVisibility\":true,\"layers\":[],\"name\":\""+layer_name+"_"+string(s)+"\",\"properties\":[],\"resourceType\":\"GMRTileLayer\",\"resourceVersion\":\"2.0\",\"tiles\":{\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"TileCompressedData\":"+
 									tiles_struct[$ layer_name+"_"+string(s)] +
-									"\n,},\"visible\":"+string(vis)+",\"depth\":"+string(_depth)+",\"userdefinedDepth\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"layers\":[],\"hierarchyFrozen\":false,\"effectEnabled\":true,\"effectType\":null,\"properties\":[],\"resourceVersion\":\"1.0\",\"name\":\""+layer_name+"_"+string(s)+"\",\"tags\":[],\"resourceType\":\"GMRTileLayer\",},";
+									"\n,\"TileDataFormat\":1,},\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"userdefinedDepth\":false,\"visible\":"+vis+",\"x\":0,\"y\":0,},";
 						s--;
 						_depth += 100;
 					}
@@ -245,19 +247,19 @@ function room_create(all_levels = false) {
 					// Creating a Tile layer for reference on types of tiles
 					if (global.build_IntGrid and l.__type == "IntGrid") {
 						var g = l.intGridCsv;
-						rm.room_string += "\n{\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"x\":0,\"y\":0,\"tiles\":{\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"TileSerialiseData\":\n"+
+						rm.room_string += "\n{\"$GMRTileLayer\":\"\",\"%Name\":\""+layer_name+"\",\"depth\":"+string(_depth)+",\"effectEnabled\":true,\"effectType\":null,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"hierarchyFrozen\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"inheritSubLayers\":true,\"inheritVisibility\":true,\"layers\":[],\"name\":\""+layer_name+"_"+string(s)+"\",\"properties\":[],\"resourceType\":\"GMRTileLayer\",\"resourceVersion\":\"2.0\",\"tiles\":{\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"TileSerialiseData\":["+
 											string(g) +
-											"\n,},\"visible\":false,\"depth\":0,\"userdefinedDepth\":true,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"layers\":[],\"hierarchyFrozen\":false,\"effectEnabled\":true,\"effectType\":null,\"properties\":[],\"resourceVersion\":\"1.0\",\"name\":\""+layer_name+"\",\"tags\":[],\"resourceType\":\"GMRTileLayer\",},";
+											"\n],},\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"userdefinedDepth\":false,\"visible\":"+vis+",\"x\":0,\"y\":0,},";
 					}
 				}
 			}
 		}
 		//Creating the Background Layer
-		rm.room_string += "\n{\"spriteId\":null,\"colour\":"+string(rm.bg_color)+",\"x\":0,\"y\":0,\"htiled\":false,\"vtiled\":false,\"hspeed\":0.0,\"vspeed\":0.0,\"stretch\":false,\"animationFPS\":15.0,\"animationSpeedType\":0,\"userdefinedAnimFPS\":false,\"visible\":true,\"depth\":"+string(_depth)+",\"userdefinedDepth\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"gridX\":32,\"gridY\":32,\"layers\":[],\"hierarchyFrozen\":false,\"effectEnabled\":true,\"effectType\":null,\"properties\":[],\"resourceVersion\":\"1.0\",\"name\":\"Background\",\"tags\":[],\"resourceType\":\"GMRBackgroundLayer\",},";
+		rm.room_string += "\n{\"$GMRBackgroundLayer\":\"\",\"%Name\":\"Background\",\"animationFPS\":15.0,\"animationSpeedType\":0,\"colour\":"+string(rm.bg_color)+",\"depth\":"+string(_depth)+",\"effectEnabled\":true,\"effectType\":null,\"gridX\":32,\"gridY\":32,\"hierarchyFrozen\":false,\"hspeed\":0.0,\"htiled\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"inheritSubLayers\":true,\"inheritVisibility\":true,\"layers\":[],\"name\":\"Background\",\"properties\":[],\"resourceType\":\"GMRBackgroundLayer\",\"resourceVersion\":\"2.0\",\"spriteId\":null,\"stretch\":false,\"userdefinedAnimFPS\":false,\"userdefinedDepth\":false,\"visible\":true,\"vspeed\":0.0,\"vtiled\":false,\"x\":0,\"y\":0,},";
 		
-		rm.room_string += room_string_build_last();
+		var room_final_string = room_string_build_first() + rm.room_string + room_string_build_last();
 		var room_file = file_text_open_write(level_path);
-		file_text_write_string(room_file,rm.room_string);
+		file_text_write_string(room_file,room_final_string);
 		file_text_close(room_file);
 	}
 	_timer = string(get_timer() - _timer);
@@ -266,7 +268,7 @@ function room_create(all_levels = false) {
 }
 
 function room_string_build_first() {
-	var room_string = "{"+"\n"+
+	/*var room_string = "{"+"\n"+
 		"\"isDnd\": false,"+"\n"+
 		"\"volume\": 1.0,"+"\n"+
 		"\"parentRoom\": null,"+"\n"+
@@ -281,11 +283,22 @@ function room_string_build_first() {
 		"  {\"inherit\":false,\"visible\":false,\"xview\":0,\"yview\":0,\"wview\":1366,\"hview\":768,\"xport\":0,\"yport\":0,\"wport\":1366,\"hport\":768,\"hborder\":32,\"vborder\":32,\"hspeed\":-1,\"vspeed\":-1,\"objectId\":null,},"+"\n"+
 		"],"+"\n"+
 		"\"layers\": ["
+	return room_string;*/
+	var room_string = "{\n"+
+		  "\"$GMRoom\":\"\",\n"+
+		  "\"%Name\":\""+rm.name+"\",\n"+
+		  "\"creationCodeFile\":\"\",\n"+
+		  "\"inheritCode\":false,\n"+
+		  "\"inheritCreationOrder\":false,\n"+
+		  "\"inheritLayers\":false,\n"+
+		  "\"instanceCreationOrder\":[\n"+rm.instanceCreationOrder+"],\n"+
+		  "\"isDnd\":false,\n"+
+		  "\"layers\":[";
 	return room_string;
 }
 
 function room_string_build_last() {
-	var room_string = "],"+"\n"+
+	/*var room_string = "],"+"\n"+
   "\"inheritLayers\": false,"+"\n"+
   "\"creationCodeFile\": \"\","+"\n"+
   "\"inheritCode\": false,"+"\n"+
@@ -320,7 +333,49 @@ function room_string_build_last() {
   "\"tags\": [],"+"\n"+
   "\"resourceType\": \"GMRoom\",\n}"
   
-  return room_string;
+  return room_string;*/
+  var room_string = "],\n"+
+	  "\"name\":\""+rm.name+"\",\n"+
+	  "\"parent\":{\n"+
+	  "  \"name\":\""+rm.parent.name+"\",\n"+
+	  "  \"path\":\""+rm.parent.path+"\",\n"+
+	  "},\n"+
+	  "\"parentRoom\":null,\n"+
+	  "\"physicsSettings\":{\n"+
+	  "  \"inheritPhysicsSettings\":false,\n"+
+	  "  \"PhysicsWorld\":false,\n"+
+	  "  \"PhysicsWorldGravityX\":0.0,\n"+
+	  "  \"PhysicsWorldGravityY\":10.0,\n"+
+	  "  \"PhysicsWorldPixToMetres\":0.1,\n"+
+	  "},\n"+
+	  "\"resourceType\":\"GMRoom\",\n"+
+	  "\"resourceVersion\":\"2.0\",\n"+
+	  "\"roomSettings\":{\n"+
+	  "  \"Height\":"+ string(rm.height) + ",\n"+
+	  "  \"inheritRoomSettings\":false,\n"+
+	  "  \"persistent\":false,\n"+
+	  "  \"Width\":"+ string(rm.width) + ",\n"+
+	  "},\n"+
+	  "\"sequenceId\":null,\n"+
+	  "\"views\":[\n"+
+	  "  {\"hborder\":32,\"hport\":1080,\"hspeed\":-1,\"hview\":1080,\"inherit\":false,\"objectId\":null,\"vborder\":32,\"visible\":false,\"vspeed\":-1,\"wport\":1920,\"wview\":1920,\"xport\":0,\"xview\":0,\"yport\":0,\"yview\":0,},\n"+
+	  "  {\"hborder\":32,\"hport\":1080,\"hspeed\":-1,\"hview\":1080,\"inherit\":false,\"objectId\":null,\"vborder\":32,\"visible\":false,\"vspeed\":-1,\"wport\":1920,\"wview\":1920,\"xport\":0,\"xview\":0,\"yport\":0,\"yview\":0,},\n"+
+	  "  {\"hborder\":32,\"hport\":1080,\"hspeed\":-1,\"hview\":1080,\"inherit\":false,\"objectId\":null,\"vborder\":32,\"visible\":false,\"vspeed\":-1,\"wport\":1920,\"wview\":1920,\"xport\":0,\"xview\":0,\"yport\":0,\"yview\":0,},\n"+
+	  "  {\"hborder\":32,\"hport\":1080,\"hspeed\":-1,\"hview\":1080,\"inherit\":false,\"objectId\":null,\"vborder\":32,\"visible\":false,\"vspeed\":-1,\"wport\":1920,\"wview\":1920,\"xport\":0,\"xview\":0,\"yport\":0,\"yview\":0,},\n"+
+	  "  {\"hborder\":32,\"hport\":1080,\"hspeed\":-1,\"hview\":1080,\"inherit\":false,\"objectId\":null,\"vborder\":32,\"visible\":false,\"vspeed\":-1,\"wport\":1920,\"wview\":1920,\"xport\":0,\"xview\":0,\"yport\":0,\"yview\":0,},\n"+
+	  "  {\"hborder\":32,\"hport\":1080,\"hspeed\":-1,\"hview\":1080,\"inherit\":false,\"objectId\":null,\"vborder\":32,\"visible\":false,\"vspeed\":-1,\"wport\":1920,\"wview\":1920,\"xport\":0,\"xview\":0,\"yport\":0,\"yview\":0,},\n"+
+	  "  {\"hborder\":32,\"hport\":1080,\"hspeed\":-1,\"hview\":1080,\"inherit\":false,\"objectId\":null,\"vborder\":32,\"visible\":false,\"vspeed\":-1,\"wport\":1920,\"wview\":1920,\"xport\":0,\"xview\":0,\"yport\":0,\"yview\":0,},\n"+
+	  "  {\"hborder\":32,\"hport\":1080,\"hspeed\":-1,\"hview\":1080,\"inherit\":false,\"objectId\":null,\"vborder\":32,\"visible\":false,\"vspeed\":-1,\"wport\":1920,\"wview\":1920,\"xport\":0,\"xview\":0,\"yport\":0,\"yview\":0,},\n"+
+	  "],\n"+
+	  "\"viewSettings\":{\n"+
+	  "  \"clearDisplayBuffer\":true,\n"+
+	  "  \"clearViewBackground\":false,\n"+
+	  "  \"enableViews\":false,\n"+
+	  "  \"inheritViewSettings\":false,\n"+
+	  "},\n"+
+	  "\"volume\":1.0,\n"+
+	"}";
+	return room_string;
 }
 
 
