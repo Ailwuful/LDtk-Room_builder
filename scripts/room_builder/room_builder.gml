@@ -104,6 +104,11 @@ function room_create(all_levels = false) {
 			instanceCreationOrder : "",
 			path : "rooms/"+level_name+"/"+level_name+".yy"
 		}
+		/*
+		
+			FOR THE LOVE OF GOD IF YOU WORK ON THIS AGAIN, IT DOENS'T NEED TO BE A STRING, JUST STRINGIFY A FULL JSON
+		
+		*/
 			
 		var LDtk_layers = level.layerInstances;
 		var LDtk_layers_number = array_length(LDtk_layers);
@@ -158,6 +163,16 @@ function room_create(all_levels = false) {
 									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
 								}
 								else if (fields[_n].__type == "Array<Int>" or fields[_n].__type == "Array<Float>") {
+									var _field_name = string(fields[_n].__identifier),
+										_field_value = string(fields[_n].__value);
+									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
+								}
+								else if (fields[_n].__type == "String") {
+									var _field_name = string(fields[_n].__identifier),
+										_field_value = string(fields[_n].__value);
+									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
+								}
+								else if (fields[_n].__type == "Bool") {
 									var _field_name = string(fields[_n].__identifier),
 										_field_value = string(fields[_n].__value);
 									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
