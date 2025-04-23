@@ -544,7 +544,8 @@ function room_create(all_levels = false) {
 							repeat(f_number) {
 								if (fields[_n].__type == "Color") obj_color = string(color_to_decimal(fields[_n].__value));
 								else if (fields[_n].__type == "Float" or fields[_n].__type == "Int") {
-									if (fields[_n].__identifier == "image_angle") obj_image_angle = string(fields[_n].__value);
+                                    if (fields[_n].__identifier == "image_xscale" or fields[_n].__identifier == "image_yscale") {};
+									else if (fields[_n].__identifier == "image_angle") obj_image_angle = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_index") obj_image_index = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_speed") obj_image_speed = string(fields[_n].__value);
 									else {
