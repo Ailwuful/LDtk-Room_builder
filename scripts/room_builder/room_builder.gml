@@ -544,7 +544,8 @@ function room_create(all_levels = false) {
 							repeat(f_number) {
 								if (fields[_n].__type == "Color") obj_color = string(color_to_decimal(fields[_n].__value));
 								else if (fields[_n].__type == "Float" or fields[_n].__type == "Int") {
-                                    if (fields[_n].__identifier == "image_xscale" or fields[_n].__identifier == "image_yscale") {};
+                                    if (fields[_n].__identifier == "image_xscale") obj_scaleX = string(fields[_n].__value);
+                                    else if (fields[_n].__identifier == "image_yscale") obj_scaleY = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_angle") obj_image_angle = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_index") obj_image_index = string(fields[_n].__value);
 									else if (fields[_n].__identifier == "image_speed") obj_image_speed = string(fields[_n].__value);
@@ -564,7 +565,7 @@ function room_create(all_levels = false) {
 										_field_value = string(fields[_n].__value);
 									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
 								}
-								else if (fields[_n].__type == "String") {
+								else if (fields[_n].__type == "String" or string_copy(fields[_n].__type, 1, 9) == "LocalEnum") {
 									var _field_name = string(fields[_n].__identifier),
 										_field_value = string(fields[_n].__value);
 									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
@@ -576,12 +577,14 @@ function room_create(all_levels = false) {
 								}
                                 else if (fields[_n].__type == "FilePath") {
 									var _field_name = string(fields[_n].__identifier),
-										_field_value = string(fields[_n].__value);
-                                    var str_parts = string_split(_field_value, "/");
-                                    var resource_name = str_parts[array_length(str_parts)-2];
-                                    var resource_type = str_parts[array_length(str_parts)-3];
-                                    // I need to parse _field_value so I get the name of the field, and what type it is, like sounds
-									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resource\":{\"name\":\""+resource_name+"\",\"path\":\""+resource_type+"/"+resource_name+"/"+resource_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+resource_name+"\",},";
+										_field_value = fields[_n].__value;
+                                    if (_field_value != undefined) {
+                                        var str_parts = string_split(_field_value, "/");
+                                        var resource_name = str_parts[array_length(str_parts)-2];
+                                        var resource_type = str_parts[array_length(str_parts)-3];
+                                        // I need to parse _field_value so I get the name of the field, and what type it is, like sounds
+    									obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resource\":{\"name\":\""+resource_name+"\",\"path\":\""+resource_type+"/"+resource_name+"/"+resource_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+resource_name+"\",},";
+                                    }
 								}
 								_n++;
 							}
