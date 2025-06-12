@@ -33,6 +33,7 @@ function LDtk_parse() {
 	buffer_delete(buffer);
 }
 
+// This function is the new method of stringifying a full struct, but this didn't work, so I went back to creating own string
 function room_create_new(all_levels = false) {
 	var _timer = get_timer();
 	
@@ -551,7 +552,8 @@ function room_create(all_levels = false) {
 									else if (fields[_n].__identifier == "image_speed") obj_image_speed = string(fields[_n].__value);
 									else {
 										var _field_name = string(fields[_n].__identifier),
-											_field_value = string(fields[_n].__value);
+											_field_value = string_format(fields[_n].__value, 1, 5);
+                                        _field_value = string_trim_end(_field_value, ["0"]);
 										obj_properties += "\n{\"$GMOverriddenProperty\":\"v1\",\"%Name\":\"\",\"name\":\"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"propertyId\":{\"name\":\""+_field_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"resourceType\":\"GMOverriddenProperty\",\"resourceVersion\":\"2.0\",\"value\":\""+_field_value+"\",},";
 									}
 								}
@@ -613,6 +615,10 @@ function room_create(all_levels = false) {
 					var tiles_struct = {};
 					var layer_name = l.__identifier;
 					var vis = l.visible ? "true" : "false";
+                    if (rm.width mod gridSize != 0 or rm.height mod gridSize != 0) {
+                        output_string += $"The room size for {rm.name} is not perfectly divisible by the grid size. They need to match.\n";
+                        continue;
+                    }
 					var tiles_array_size = int64((rm.width/gridSize)*(rm.height/gridSize));
 					tiles_struct[$ layer_name+"_1"] = array_create(tiles_array_size + 1, int64(0));
 					tiles_struct[$ layer_name+"_1"][0] = tiles_array_size;
