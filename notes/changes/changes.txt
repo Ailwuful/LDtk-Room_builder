@@ -46,3 +46,19 @@ Some of these changes will be breaking; make a backup before updating.
  - Refresh functions: added EmuCore::SetRefresh and EmuCore::SetRefresh
      - This lets you call .Refresh() on any element (or container element) to update the text or values of an element at any time
  - Scribble: is now Version 8
+
+
+___________________________________________
+############################################################################################
+ERROR in action number 1
+of Draw Event for object oMenu:
+JSON parse error : object value separator ',' expected
+ at gml_Script_room_create (line 493) -               level_json = json_parse(level_json);
+############################################################################################
+gml_Script_room_create (line 493)
+gml_Script_anon@1253@gml_Object_oMenu_Create_0 (line 54) -               room_create(false);
+gml_Script_anon@1105@EmuButton@EmuButton (line 48) -             self.callback();
+gml_Script_anon@8864@EmuCore@Emu_Core (line 307) -             if (self.contents[i] && self.contents[i].enabled) self.contents[i].Render(at_x, at_y, debug_render);
+gml_Script_anon@7105@EmuCore@Emu_Core (line 251) -         self.renderContents(self.x + base_x, self.y + base_y, debug_render);
+gml_Object_oMenu_Draw_0 (line 1) - container.Render();
+

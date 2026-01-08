@@ -107,11 +107,12 @@ _string = "The LDtk to GameMaker room builder requires that "+
 "Click \"Load Level List\" to open a list of levels and select which GameMaker rooms to build.\n\n"+
 "Click \"Build Rooms\" to build all selected Levels or all Levels by default.\n\n"+
 "Selecting Minify JSON in LDtk will greatly increase build speed.";
-
+/*
 button = new EmuCheckbox(10, 640, 120, 60, "Build\nIntGrid layer",global.build_IntGrid,function() {
 	global.build_IntGrid = !global.build_IntGrid;
 });
 container.AddContent(button);
+ */
 
 /*
 if (file_exists(global.LDtk_path)) {

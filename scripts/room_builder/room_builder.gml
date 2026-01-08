@@ -2,7 +2,7 @@
 #macro LDtk_struct global.LDTKstruct
 #macro room_struct global.roomstruct
 #macro Dir global.project_path
-global.build_IntGrid = 1;
+global.build_IntGrid = false;
 global.LDTKstruct = -1;
 global.project_path = "";
 global.LDtk_path = "";
@@ -593,7 +593,7 @@ function room_create(all_levels = false) {
 						}
 						obj_properties += "]";
 						//show_debug_message([obj_image_angle,obj_image_index,obj_image_speed,obj_scaleX,obj_scaleY,obj_color]);
-						rm.room_string += "{\"$GMRInstance\":\"v2\",\"%Name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"colour\":"+obj_color+",\"frozen\":false,\"hasCreationCode\":false,\"ignore\":false,\"imageIndex\":"+obj_image_index+",\"imageSpeed\":"+obj_image_speed+",\"inheritCode\":false,\"inheritedItemId\":null,\"inheritItemSettings\":false,\"isDnd\":false,\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"properties\":"+obj_properties+",\"resourceType\":\"GMRInstance\",\"resourceVersion\":\"2.0\",\"rotation\":"+obj_image_angle+",\"scaleX\":"+obj_scaleX+",\"scaleY\":"+obj_scaleY+",\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",},\n";
+						rm.room_string += "{\"$GMRInstance\":\"v4\",\"%Name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"colour\":"+obj_color+",\"frozen\":false,\"hasCreationCode\":false,\"ignore\":false,\"imageIndex\":"+obj_image_index+",\"imageSpeed\":"+obj_image_speed+",\"inheritCode\":false,\"inheritedItemId\":null,\"inheritItemSettings\":false,\"isDnd\":false,\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"objectId\":{\"name\":\""+obj_name+"\",\"path\":\"objects/"+obj_name+"/"+obj_name+".yy\",},\"properties\":"+obj_properties+",\"resourceType\":\"GMRInstance\",\"resourceVersion\":\"2.0\",\"rotation\":"+obj_image_angle+",\"scaleX\":"+obj_scaleX+",\"scaleY\":"+obj_scaleY+",\"x\":"+string(e[o].px[0])+",\"y\":"+string(e[o].px[1])+",},\n";
 						rm.instanceCreationOrder += "{\"name\":\""+"inst_"+obj_name+"_"+string(inst_number)+"_"+level_name+"\",\"path\":\""+rm.path+"\",},\n";
 						inst_number++;
 						o++;
@@ -675,12 +675,13 @@ function room_create(all_levels = false) {
 					}
 					
 					// Creating a Tile layer for reference on types of tiles
-					if (global.build_IntGrid and l.__type == "IntGrid") {
-						var g = l.intGridCsv;
-						rm.room_string += "\n{\"$GMRTileLayer\":\"\",\"%Name\":\""+layer_name+"\",\"depth\":"+string(_depth)+",\"effectEnabled\":true,\"effectType\":null,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"hierarchyFrozen\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"inheritSubLayers\":true,\"inheritVisibility\":true,\"layers\":[],\"name\":\""+layer_name+"\",\"properties\":[],\"resourceType\":\"GMRTileLayer\",\"resourceVersion\":\"2.0\",\"tiles\":{\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"TileCompressedData\":["+
-											string(g) +
-											"\n]\"TileDataFormat\":1,},\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"userdefinedDepth\":false,\"visible\":"+vis+",\"x\":0,\"y\":0,},";
-					}
+					//if (global.build_IntGrid and l.__type == "IntGrid") {
+						//var g = l.intGridCsv;
+                        //show_message("Shouldn't be here");
+						//rm.room_string += "\n{\"$GMRTileLayer\":\"\",\"%Name\":\""+layer_name+"\",\"depth\":"+string(_depth)+",\"effectEnabled\":true,\"effectType\":null,\"gridX\":"+layer_struct.gridX+",\"gridY\":"+layer_struct.gridY+",\"hierarchyFrozen\":false,\"inheritLayerDepth\":false,\"inheritLayerSettings\":false,\"inheritSubLayers\":true,\"inheritVisibility\":true,\"layers\":[],\"name\":\""+layer_name+"\",\"properties\":[],\"resourceType\":\"GMRTileLayer\",\"resourceVersion\":\"2.0\",\"tiles\":{\"SerialiseHeight\":"+layer_struct.tiles.SerialiseHeight+",\"SerialiseWidth\":"+layer_struct.tiles.SerialiseWidth+",\"TileCompressedData\":"+
+											//string(g) +
+											//"\n,\"TileDataFormat\":1,},\"tilesetId\":{\"name\":\""+layer_struct.tilesetId.name+"\",\"path\":\""+layer_struct.tilesetId.path+"\",},\"userdefinedDepth\":false,\"visible\":"+vis+",\"x\":0,\"y\":0,},";
+					//}
 				}
 			}
 		}
